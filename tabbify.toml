@@ -1,4 +1,5 @@
 [app]
+id          = "019e7903-0000-7000-8000-000000000d03"
 name        = "hello-http"
 description = "Minimal HTTP test app — same image runs as docker AND firecracker"
 
@@ -23,8 +24,10 @@ dynamic_prefixes = ["/"]
 supervisor = "ec2-prod"
 runtime    = "docker"
 
-[[deploy]]
-supervisor = "thinkpad"
-runtime    = "firecracker"
+# firecracker@thinkpad — temporarily disabled for the docker auto-deploy test;
+# re-enable once the FC path is validated end-to-end on the ThinkPad.
+# [[deploy]]
+# supervisor = "thinkpad"
+# runtime    = "firecracker"
 
 [env]
