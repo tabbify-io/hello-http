@@ -1,0 +1,30 @@
+[app]
+name        = "hello-http"
+description = "Minimal HTTP test app — same image runs as docker AND firecracker"
+
+[build]
+kind       = "docker"
+context    = "."
+dockerfile = "Dockerfile"
+builder    = "ec2-prod"
+
+[runtime]                        # defaults; a target may override `type`
+type             = "docker"     # docker | firecracker | wasm-http
+lifecycle        = "on_request"
+idle_timeout_sec = 300
+memory_mb        = 256
+vcpus            = 1
+
+[routes]
+dynamic_prefixes = ["/"]
+
+# Same image, two runtimes — the whole point of runtime-at-deploy.
+[[deploy]]
+supervisor = "ec2-prod"
+runtime    = "docker"
+
+[[deploy]]
+supervisor = "thinkpad"
+runtime    = "firecracker"
+
+[env]
